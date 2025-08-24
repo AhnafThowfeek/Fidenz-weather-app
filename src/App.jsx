@@ -44,15 +44,7 @@ function AuthWrapper() {
 
   return (
     <div>
-      <p className="p-2">Logged in as {user.email}</p>
-      <button
-        onClick={logout}
-        className="bg-red-500 text-white px-3 py-1 rounded"
-      >
-        Logout
-      </button>
-
-      {/* Show WeatherApp only after login */}
+     
       <WeatherApp />
     </div>
   );

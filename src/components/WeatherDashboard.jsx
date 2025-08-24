@@ -108,25 +108,7 @@ const WeatherDashboard = () => {
         <h1 className="text-3xl font-bold text-white">Weather App</h1>
       </div>
 
-      {/* Search bar */}
-      <div className="flex items-center justify-center mb-8">
-        <div className="flex items-center bg-gray-800 bg-opacity-50 rounded-lg overflow-hidden">
-          <input
-            type="text"
-            placeholder="Enter a city"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onKeyPress={handleKeyPress}
-            className="bg-transparent text-white placeholder-gray-400 px-4 py-3 w-64 focus:outline-none"
-          />
-          <button
-            onClick={handleAddCity}
-            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-medium transition-colors duration-200"
-          >
-            Add City
-          </button>
-        </div>
-      </div>
+     
 
       {/* Weather cards in 2-column grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
