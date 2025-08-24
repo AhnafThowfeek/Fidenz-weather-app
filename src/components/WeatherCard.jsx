@@ -1,4 +1,4 @@
-// Updated src/components/WeatherCard.jsx - Exact UI match
+// Updated src/components/WeatherCard.jsx - Full card hover effect
 import React from 'react';
 import { format } from 'date-fns';
 import { 
@@ -72,17 +72,19 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" onClick={handleCardClick}>
       {/* X button */}
-      <button className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors">
-        <X size={20} />
+      <button 
+        className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
+        onClick={(e) => {
+          e.stopPropagation(); // Prevent card click when X is clicked
+        }}
+      >
+        
       </button>
 
       {/* Main card */}
-      <div 
-        className={`bg-gradient-to-br ${getCardColors(weather.name, weather.weather[0].description, weather.main.temp)} rounded-2xl p-6 text-white cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl`}
-        onClick={handleCardClick}
-      >
+      <div className={`bg-gradient-to-br ${getCardColors(weather.name, weather.weather[0].description, weather.main.temp)} rounded-2xl p-6 text-white`}>
         {/* City header */}
         <div className="mb-6">
           <h2 className="text-xl font-bold">{weather.name}, {weather.sys.country}</h2>

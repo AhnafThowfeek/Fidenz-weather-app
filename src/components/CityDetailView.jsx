@@ -1,4 +1,4 @@
-// Updated src/components/CityDetailView.jsx - Exact UI match
+// Updated src/components/CityDetailView.jsx - Mobile responsive with better back button
 import React from 'react';
 import { format } from 'date-fns';
 import { 
@@ -44,39 +44,45 @@ const CityDetailView = ({ weather, onBack }) => {
   };
 
   return (
-    <div className="animate-fade-in max-w-4xl mx-auto">
+    <div className="animate-fade-in max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* Header */}
-      <div className="flex items-center justify-center mb-8 relative">
+      <div className="flex items-center justify-center mb-6 sm:mb-8 relative">
         <button 
           onClick={onBack}
-          className="absolute left-0 bg-white bg-opacity-20 hover:bg-opacity-30 text-white p-3 rounded-full transition-all duration-200"
+          className="absolute left-0 bg-white hover:bg-gray-100 text-black p-2 sm:p-3 rounded-full transition-all duration-200 flex items-center justify-center group hover:scale-110"
         >
-          <ArrowLeft size={24} />
+          <ArrowLeft size={20} className="sm:w-6 sm:h-6" />
         </button>
-        <div className="text-3xl mr-3">🌤️</div>
-        <h1 className="text-3xl font-bold text-white">Weather App</h1>
+        <div className="text-2xl sm:text-3xl mr-2 sm:mr-3">🌤️</div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-white">Weather App</h1>
       </div>
 
-      {/* Main weather card - exact match to your screenshot */}
+      {/* Main weather card */}
       <div className="max-w-2xl mx-auto">
-        <div className={`bg-gradient-to-br ${getCardColors(weather.name)} rounded-t-3xl p-8 text-white`}>
+        <div className={`bg-gradient-to-br ${getCardColors(weather.name)} rounded-t-3xl p-4 sm:p-6 lg:p-8 text-white`}>
           {/* City name and date */}
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold mb-2">{weather.name}, {weather.sys.country}</h2>
-            <p className="text-blue-100 text-lg opacity-90">
+          <div className="text-center mb-6 sm:mb-8">
+            <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-2">{weather.name}, {weather.sys.country}</h2>
+            <p className="text-blue-100 text-sm sm:text-base lg:text-lg opacity-90">
               {format(new Date(), 'h:mmaaa, MMM d')}
             </p>
           </div>
 
           {/* Weather display */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center">
-              <span className="text-8xl mr-6">{getWeatherIconName(weather.weather[0].description)}</span>
-              <span className="text-2xl capitalize">{weather.weather[0].description}</span>
+          <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
+            <div className="flex flex-col sm:flex-row items-center text-center sm:text-left">
+              <span className="text-6xl sm:text-7xl lg:text-8xl mb-2 sm:mb-0 sm:mr-4 lg:mr-6">
+                {getWeatherIconName(weather.weather[0].description)}
+              </span>
+              <span className="text-lg sm:text-xl lg:text-2xl capitalize">
+                {weather.weather[0].description}
+              </span>
             </div>
-            <div className="text-right">
-              <div className="text-8xl font-bold mb-2">{Math.round(weather.main.temp)}°C</div>
-              <div className="text-lg opacity-90">
+            <div className="text-center sm:text-right">
+              <div className="text-6xl sm:text-7xl lg:text-8xl font-bold mb-2">
+                {Math.round(weather.main.temp)}°C
+              </div>
+              <div className="text-sm sm:text-base lg:text-lg opacity-90">
                 <p>Temp Min: {Math.round(weather.main.temp_min)}°C</p>
                 <p>Temp Max: {Math.round(weather.main.temp_max)}°C</p>
               </div>
@@ -85,40 +91,40 @@ const CityDetailView = ({ weather, onBack }) => {
         </div>
 
         {/* Details section */}
-        <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-b-3xl p-8">
-          <div className="grid grid-cols-3 gap-8 text-white">
+        <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-b-3xl p-4 sm:p-6 lg:p-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 text-white text-xs sm:text-sm md:text-base text-center sm:text-left">
             {/* Left column */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
                 <p className="text-gray-300 mb-1">Pressure:</p>
-                <p className="text-lg font-medium">{weather.main.pressure}hPa</p>
+                <p className="font-medium">{weather.main.pressure}hPa</p>
               </div>
               <div>
                 <p className="text-gray-300 mb-1">Humidity:</p>
-                <p className="text-lg font-medium">{weather.main.humidity}%</p>
+                <p className="font-medium">{weather.main.humidity}%</p>
               </div>
               <div>
                 <p className="text-gray-300 mb-1">Visibility:</p>
-                <p className="text-lg font-medium">{(weather.visibility / 1000).toFixed(1)}km</p>
+                <p className="font-medium">{(weather.visibility / 1000).toFixed(1)}km</p>
               </div>
             </div>
 
             {/* Center column - Wind */}
-            <div className="flex flex-col items-center justify-center">
-              <Navigation size={48} className="text-blue-300 mb-2" />
-              <p className="text-xl font-bold">{weather.wind?.speed || 0}m/s</p>
+            <div className="flex flex-col items-center justify-center py-4 sm:py-0">
+              <Navigation size={40} className="sm:w-12 sm:h-12 text-blue-300 mb-2" />
+              <p className="font-bold">{weather.wind?.speed || 0}m/s</p>
               <p className="text-gray-300">{weather.wind?.deg || 0} Degree</p>
             </div>
 
             {/* Right column */}
-            <div className="space-y-4">
+            <div className="space-y-3 sm:space-y-4">
               <div>
                 <p className="text-gray-300 mb-1">Sunrise:</p>
-                <p className="text-lg font-medium">{formatTime(weather.sys.sunrise)}</p>
+                <p className="font-medium">{formatTime(weather.sys.sunrise)}</p>
               </div>
               <div>
                 <p className="text-gray-300 mb-1">Sunset:</p>
-                <p className="text-lg font-medium">{formatTime(weather.sys.sunset)}</p>
+                <p className="font-medium">{formatTime(weather.sys.sunset)}</p>
               </div>
             </div>
           </div>
@@ -126,8 +132,8 @@ const CityDetailView = ({ weather, onBack }) => {
       </div>
 
       {/* Footer */}
-      <footer className="text-center mt-12">
-        <p className="text-blue-200 text-sm">2021 Fidenz Technologies</p>
+      <footer className="text-center mt-8 sm:mt-12">
+        <p className="text-blue-200 text-xs sm:text-sm">2021 Fidenz Technologies</p>
       </footer>
     </div>
   );
