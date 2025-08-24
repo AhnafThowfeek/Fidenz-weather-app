@@ -1,14 +1,29 @@
+// Updated src/components/WeatherDashboard.jsx - Exact UI match
 import React, { useState, useEffect } from 'react';
 import WeatherCard from './WeatherCard';
+import CityDetailView from './CityDetailView';
 import LoadingSpinner from './LoadingSpinner';
 import { weatherService } from '../services/weatherService';
+import { Search, Plus } from 'lucide-react';
 
 const WeatherDashboard = () => {
   const [weatherData, setWeatherData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  const defaultCities = ['Colombo', 'Tokyo', 'Liverpool', 'Sydney', 'Boston'];
+  // All 8 cities from your JSON data
+  const allCities = [
+    'Colombo',
+    'Tokyo', 
+    'Liverpool',
+    'Paris',
+    'Sydney',
+    'Boston',
+    'Shanghai',
+    'Oslo'
+  ];
 
   useEffect(() => {
     const fetchWeatherData = async () => {
@@ -16,11 +31,14 @@ const WeatherDashboard = () => {
         setLoading(true);
         setError(null);
 
-        // Fetch each city individually
-        const promises = defaultCities.map(city => weatherService.getWeatherByCity(city));
-        const results = await Promise.all(promises);
+        const promises = allCities.map(city => weatherService.getWeatherByCity(city));
+        const results = await Promise.allSettled(promises);
 
-        setWeatherData(results);
+        const successfulResults = results
+          .filter(result => result.status === 'fulfilled')
+          .map(result => result.value);
+
+        setWeatherData(successfulResults);
       } catch (err) {
         console.error('Weather fetch error:', err);
         setError(err.response?.data?.message || 'Failed to fetch weather data');
@@ -36,6 +54,28 @@ const WeatherDashboard = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleCityClick = (weather) => {
+    setSelectedCity(weather);
+  };
+
+  const handleBackClick = () => {
+    setSelectedCity(null);
+  };
+
+  const handleAddCity = () => {
+    // Handle adding city functionality
+    if (searchTerm.trim()) {
+      console.log('Add city:', searchTerm);
+      setSearchTerm('');
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleAddCity();
+    }
+  };
+
   if (loading) return <LoadingSpinner />;
 
   if (error)
@@ -49,14 +89,58 @@ const WeatherDashboard = () => {
       </div>
     );
 
+  // Show detailed view if a city is selected
+  if (selectedCity) {
+    return (
+      <CityDetailView 
+        weather={selectedCity} 
+        onBack={handleBackClick}
+      />
+    );
+  }
+
+  // Show dashboard with exact UI match
   return (
-    <div className="animate-fade-in">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-        {weatherData.map(weather => (
-          <WeatherCard key={weather.id} weather={weather} />
+    <div className="animate-fade-in max-w-4xl mx-auto">
+      {/* Header with logo */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="text-3xl mr-3">🌤️</div>
+        <h1 className="text-3xl font-bold text-white">Weather App</h1>
+      </div>
+
+      {/* Search bar */}
+      <div className="flex items-center justify-center mb-8">
+        <div className="flex items-center bg-gray-800 bg-opacity-50 rounded-lg overflow-hidden">
+          <input
+            type="text"
+            placeholder="Enter a city"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={handleKeyPress}
+            className="bg-transparent text-white placeholder-gray-400 px-4 py-3 w-64 focus:outline-none"
+          />
+          <button
+            onClick={handleAddCity}
+            className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 font-medium transition-colors duration-200"
+          >
+            Add City
+          </button>
+        </div>
+      </div>
+
+      {/* Weather cards in 2-column grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        {weatherData.map((weather, index) => (
+          <WeatherCard 
+            key={weather.id} 
+            weather={weather} 
+            onClick={handleCityClick}
+            cardIndex={index}
+          />
         ))}
       </div>
 
+      {/* Footer */}
       <footer className="text-center mt-12">
         <p className="text-blue-200 text-sm">2021 Fidenz Technologies</p>
       </footer>

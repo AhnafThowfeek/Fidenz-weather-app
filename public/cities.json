@@ -27,6 +27,15 @@
     }
   },
   {
+    "id": 2988507,
+    "name": "Paris",
+    "country": "FR",
+    "coord": {
+      "lon": 2.3488,
+      "lat": 48.853401
+    }
+  },
+  {
     "id": 2147714,
     "name": "Sydney",
     "country": "AU",
@@ -45,30 +54,21 @@
     }
   },
   {
-    "id": 2643743,
-    "name": "London",
-    "country": "GB",
+    "id": 1796236,
+    "name": "Shanghai",
+    "country": "CN",
     "coord": {
-      "lon": -0.12574,
-      "lat": 51.50853
+      "lon": 121.4581,
+      "lat": 31.2222
     }
   },
   {
-    "id": 5128581,
-    "name": "New York",
-    "country": "US",
+    "id": 3143244,
+    "name": "Oslo",
+    "country": "NO",
     "coord": {
-      "lon": -74.005966,
-      "lat": 40.714272
-    }
-  },
-  {
-    "id": 2988507,
-    "name": "Paris",
-    "country": "FR",
-    "coord": {
-      "lon": 2.3488,
-      "lat": 48.853401
+      "lon": 10.7461,
+      "lat": 59.9127
     }
   }
 ]

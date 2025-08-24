@@ -1,3 +1,4 @@
+// Enhanced src/services/weatherService.js
 import axios from 'axios';
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
@@ -12,6 +13,7 @@ if (!API_KEY) {
 }
 
 class WeatherService {
+  // Enhanced method to get weather for multiple cities by IDs
   async getWeatherForCities(cityIds) {
     const cacheKey = cityIds.join(',');
     const cachedData = cache.get(cacheKey);
@@ -39,6 +41,7 @@ class WeatherService {
     }
   }
 
+  // Get weather for a single city by name
   async getWeatherByCity(cityName) {
     const cacheKey = `city_${cityName}`;
     const cachedData = cache.get(cacheKey);
@@ -61,9 +64,48 @@ class WeatherService {
 
       return weatherData;
     } catch (error) {
-      console.error('Error fetching weather data for city:', error.response?.data || error.message);
+      console.error(`Error fetching weather data for ${cityName}:`, error.response?.data || error.message);
       throw error;
     }
+  }
+
+  // New method: Get weather for all predefined cities using batch API
+  async getAllCitiesWeather() {
+    // City IDs from your JSON data
+    const cityIds = [1248991, 1850147, 2644210, 2988507, 2147714, 4930956, 1796236, 3143244];
+    
+    try {
+      return await this.getWeatherForCities(cityIds);
+    } catch (error) {
+      // Fallback: fetch cities individually if batch fails
+      console.warn('Batch fetch failed, falling back to individual requests');
+      const cityNames = ['Colombo', 'Tokyo', 'Liverpool', 'Paris', 'Sydney', 'Boston', 'Shanghai', 'Oslo'];
+      
+      const promises = cityNames.map(async (cityName) => {
+        try {
+          return await this.getWeatherByCity(cityName);
+        } catch (err) {
+          console.warn(`Failed to fetch weather for ${cityName}:`, err.message);
+          return null;
+        }
+      });
+
+      const results = await Promise.all(promises);
+      return results.filter(result => result !== null);
+    }
+  }
+
+  // Clear cache method
+  clearCache() {
+    cache.clear();
+  }
+
+  // Get cache statistics
+  getCacheStats() {
+    return {
+      size: cache.size,
+      keys: Array.from(cache.keys())
+    };
   }
 }
 
