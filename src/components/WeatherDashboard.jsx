@@ -1,4 +1,4 @@
-// Updated src/components/WeatherDashboard.jsx - Exact UI match
+
 import React, { useState, useEffect } from 'react';
 import WeatherCard from './WeatherCard';
 import CityDetailView from './CityDetailView';
@@ -99,10 +99,9 @@ const WeatherDashboard = () => {
     );
   }
 
-  // Show dashboard with exact UI match
   return (
     <div className="animate-fade-in max-w-4xl mx-auto">
-      {/* Header with logo */}
+    
       <div className="flex items-center justify-center mb-8">
         <div className="text-3xl mr-3">🌤️</div>
         <h1 className="text-3xl font-bold text-white">Weather App</h1>
@@ -110,7 +109,7 @@ const WeatherDashboard = () => {
 
      
 
-      {/* Weather cards in 2-column grid */}
+      
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
         {weatherData.map((weather, index) => (
           <WeatherCard 
@@ -122,7 +121,7 @@ const WeatherDashboard = () => {
         ))}
       </div>
 
-      {/* Footer */}
+   
       <footer className="text-center mt-12">
         <p className="text-blue-200 text-sm">2021 Fidenz Technologies</p>
       </footer>

@@ -1,4 +1,4 @@
-// Enhanced src/services/weatherService.js
+
 import axios from 'axios';
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
@@ -69,7 +69,7 @@ class WeatherService {
     }
   }
 
-  // New method: Get weather for all predefined cities using batch API
+  // Get weather for all predefined cities using batch API
   async getAllCitiesWeather() {
     // City IDs from your JSON data
     const cityIds = [1248991, 1850147, 2644210, 2988507, 2147714, 4930956, 1796236, 3143244];

@@ -1,4 +1,3 @@
-// Updated src/components/WeatherCard.jsx - Full card hover effect
 import React from 'react';
 import { format } from 'date-fns';
 import { 
@@ -34,7 +33,7 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
   };
 
   const getCardColors = (cityName, condition, temp) => {
-    // Predefined colors for each city to match your screenshots
+    // Predefined colors for each city 
     const cityColors = {
       'Colombo': 'from-blue-400 to-blue-600',
       'Tokyo': 'from-purple-500 to-purple-700', 
@@ -73,19 +72,12 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
 
   return (
     <div className="relative transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" onClick={handleCardClick}>
-      {/* X button */}
-      <button 
-        className="absolute top-4 right-4 z-10 text-white hover:text-gray-300 transition-colors"
-        onClick={(e) => {
-          e.stopPropagation(); // Prevent card click when X is clicked
-        }}
-      >
-        
-      </button>
+     
+     
 
-      {/* Main card */}
+    
       <div className={`bg-gradient-to-br ${getCardColors(weather.name, weather.weather[0].description, weather.main.temp)} rounded-2xl p-6 text-white`}>
-        {/* City header */}
+       
         <div className="mb-6">
           <h2 className="text-xl font-bold">{weather.name}, {weather.sys.country}</h2>
           <p className="text-blue-100 text-sm opacity-90">
@@ -93,7 +85,7 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
           </p>
         </div>
 
-        {/* Weather display */}
+        
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center">
             <span className="text-4xl mr-3">{getWeatherIconName(weather.weather[0].description)}</span>
@@ -109,7 +101,7 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
         </div>
       </div>
 
-      {/* Details section - outside the colored card */}
+      
       <div className="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-b-2xl p-4 -mt-2 pt-6">
         <div className="grid grid-cols-3 gap-4 text-sm text-white">
           <div>
