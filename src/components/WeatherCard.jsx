@@ -73,9 +73,6 @@ const WeatherCard = ({ weather, onClick, cardIndex = 0 }) => {
   return (
     <div className="relative transition-all duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer" onClick={handleCardClick}>
      
-     
-
-    
       <div className={`bg-gradient-to-br ${getCardColors(weather.name, weather.weather[0].description, weather.main.temp)} rounded-2xl p-6 text-white`}>
        
         <div className="mb-6">
